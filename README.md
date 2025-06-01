@@ -14,4 +14,4 @@ When you are finished, exit by running `fs.unsetEnvironment()`. This is easiest 
 envMod will save environment state on reboot! Even upon reboot, your environment will stay the same. You will not need to re-enter the `envMod` command. **This requires that you have installed the `startup.lua` script included or added it to the top of your own.**
 
 ## Bugs
-I have done some minimal testing and there is only one known bug: `cd ..` can *seem* to put you outside of the environment. However, this is only caused because I can't figure out how to get the shell to not update its path. It won't actually escape. Found more bugs? Open an issue or DM SpSf (swoshswosh_01578). Bugs will be fixed. Probably™.
+Found many bugs? Open an issue or DM SpSf (swoshswosh_01578). Bugs will be fixed. Probably™.
