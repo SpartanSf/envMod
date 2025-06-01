@@ -55,7 +55,12 @@ fs.setEnvironment = function(enabled, path)
         return oldFS.isDriveRoot(fs.sanitizePath(path))
     end
     newFS.list = function(path)
-        return oldFS.list(fs.sanitizePath(path))
+        path = fs.sanitizePath(path)
+        local list = oldFS.list(path)
+
+        -- this makes the machine think rom exists, even when it doesn't
+        if path == nsetapi.get("envmod.settings", "ENV_PATH") then table.insert(list, "rom") end
+        return list
     end
     newFS.getName = function(path)
         return oldFS.getName(fs.sanitizePath(path))
