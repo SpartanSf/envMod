@@ -9,6 +9,17 @@ nsetapi.useFS(oldFS)
 nsetapi.setDefault("envmod.settings", "ENV_ENABLED", false)
 nsetapi.setDefault("envmod.settings", "ENV_PATH", "/")
 
+local function normalize(path)
+    local result = {}
+    for part in string.gmatch(path, "[^/]+") do
+        if part == ".." then
+            table.remove(result)
+        elseif part ~= "." and part ~= "" then
+            table.insert(result, part)
+        end
+    end
+    return table.concat(result, "/")
+end
 
 fs.unsetEnvironment = function()
     local newDir = fs.combine(nsetapi.get("envmod.settings", "ENV_PATH"), shell.dir())
@@ -39,7 +50,7 @@ fs.setEnvironment = function(enabled, path)
 
     newFS.sanitizePath = function(path)
         if nsetapi.get("envmod.settings", "ENV_ENABLED") then
-            path = oldFS.combine(path)
+            path = normalize(oldFS.combine(path))
             local parts = newFS.getPathParts(path)
             if parts[1] ~= "rom" then
                 path = oldFS.combine(nsetapi.get("envmod.settings", "ENV_PATH"), path)
